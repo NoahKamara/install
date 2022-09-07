@@ -4,6 +4,8 @@
 # Allow `[[ -n "$(command)" ]]`, `func "$(command)"`, pipes, etc.
 # shellcheck disable=SC2312
 
+CommandLineToolsPath="/Applications/Xcode-beta.app/Contents/Developer"
+
 set -u
 
 abort() {
@@ -32,7 +34,7 @@ if [[ -n "${INTERACTIVE-}" && -n "${NONINTERACTIVE-}" ]]
 then
   abort 'Both `$INTERACTIVE` and `$NONINTERACTIVE` are set. Please unset at least one variable and try again.'
 fi
-
+g
 # Check if script is run in POSIX mode
 if [[ -n "${POSIXLY_CORRECT+1}" ]]
 then
@@ -315,9 +317,9 @@ should_install_command_line_tools() {
 
   if version_gt "${macos_version}" "10.13"
   then
-    ! [[ -e "/Library/Developer/CommandLineTools/usr/bin/git" ]]
+    ! [[ -e "${CommandLineToolsPath}/usr/bin/git" ]]
   else
-    ! [[ -e "/Library/Developer/CommandLineTools/usr/bin/git" ]] ||
+    ! [[ -e "${CommandLineToolsPath}/usr/bin/git" ]] ||
       ! [[ -e "/usr/include/iconv.h" ]]
   fi
 }
